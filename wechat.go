@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/MrCHI/gowechat/wxcontext"
 	"github.com/astaxie/beego/cache"
-	"github.com/yaotian/gowechat/wxcontext"
 )
 
 //memCache if wxcontext.Config no cache, this will give a default memory cache.

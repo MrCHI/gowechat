@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 
+	"github.com/MrCHI/gowechat"
+	"github.com/MrCHI/gowechat/mp/message"
+	"github.com/MrCHI/gowechat/wxcontext"
 	"github.com/gin-gonic/gin"
-	"github.com/yaotian/gowechat"
-	"github.com/yaotian/gowechat/mp/message"
-	"github.com/yaotian/gowechat/wxcontext"
 )
 
 func main() {

@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 
+	"github.com/MrCHI/gowechat"
+	"github.com/MrCHI/gowechat/mp/message"
+	"github.com/MrCHI/gowechat/mp/user"
+	"github.com/MrCHI/gowechat/wxcontext"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
-	"github.com/yaotian/gowechat"
-	"github.com/yaotian/gowechat/mp/message"
-	"github.com/yaotian/gowechat/mp/user"
-	"github.com/yaotian/gowechat/wxcontext"
 )
 
 var appURL = "http://localhost:8001"

@@ -1,8 +1,8 @@
 package paytool
 
 import (
-	"github.com/yaotian/gowechat/mch/base"
-	"github.com/yaotian/gowechat/wxcontext"
+	"github.com/MrCHI/gowechat/mch/base"
+	"github.com/MrCHI/gowechat/wxcontext"
 )
 
 //PayTool pay tool
