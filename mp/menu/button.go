@@ -7,6 +7,8 @@ type Button struct {
 	Key        string    `json:"key,omitempty"`
 	URL        string    `json:"url,omitempty"`
 	MediaID    string    `json:"media_id,omitempty"`
+	AppID      string    `json:"appid,omitempty"`
+	PagePath   string    `json:"pagepath,omitempty"`
 	SubButtons []*Button `json:"sub_button,omitempty"`
 }
 
@@ -124,5 +126,19 @@ func (btn *Button) SetViewLimitedButton(name, mediaID string) {
 
 	btn.Key = ""
 	btn.URL = ""
+	btn.SubButtons = nil
+}
+
+// 点击菜单跳转小程序的事件推送
+func (btn *Button) SetViewMiniprogramButton(name, page_path, key, url, app_id string) {
+	btn.Type = "miniprogram"
+	btn.Name = name
+	btn.MediaID = ""
+	btn.AppID = app_id
+
+	btn.Key = key
+	btn.URL = url
+	btn.PagePath = page_path
+
 	btn.SubButtons = nil
 }
