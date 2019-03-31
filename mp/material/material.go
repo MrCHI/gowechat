@@ -11,9 +11,10 @@ import (
 )
 
 const (
-	addNewsURL     = "https://api.weixin.qq.com/cgi-bin/material/add_news"
-	addMaterialURL = "https://api.weixin.qq.com/cgi-bin/material/add_material"
-	delMaterialURL = "https://api.weixin.qq.com/cgi-bin/material/del_material"
+	addNewsURL          = "https://api.weixin.qq.com/cgi-bin/material/add_news"
+	addMaterialURL      = "https://api.weixin.qq.com/cgi-bin/material/add_material"
+	delMaterialURL      = "https://api.weixin.qq.com/cgi-bin/material/del_material"
+	batchgetMaterialURL = "https://api.weixin.qq.com/cgi-bin/material/batchget_material"
 )
 
 //Material 素材管理
@@ -37,6 +38,29 @@ type Article struct {
 	ShowCoverPic     int    `json:"show_cover_pic"`
 	Content          string `json:"content"`
 	ContentSourceURL string `json:"content_source_url"`
+}
+
+type Error struct {
+	ErrCode int64  `json:"errcode"`
+	ErrMsg  string `json:"errmsg"`
+}
+
+type BatchGetResult struct {
+	TotalCount int            `json:"total_count"` // 该类型的素材的总数
+	ItemCount  int            `json:"item_count"`  // 本次调用获取的素材的数量
+	Items      []MaterialInfo `json:"item"`        // 本次调用获取的素材列表
+}
+
+type BatchGetResultEx struct {
+	Error
+	BatchGetResult
+}
+
+type MaterialInfo struct {
+	MediaId    string `json:"media_id"`    // 素材id
+	Name       string `json:"name"`        // 文件名称
+	UpdateTime int64  `json:"update_time"` // 最后更新时间
+	URL        string `json:"url"`         // 当获取的列表是图片素材列表时, 该字段是图片的URL
 }
 
 //reqArticles 永久性图文素材请求信息
@@ -177,4 +201,35 @@ func (material *Material) DeleteMaterial(mediaID string) error {
 		return err
 	}
 	return nil
+}
+
+type reqBatchGat struct {
+	MaterialType string `json:"type"`
+	Offset       int    `json:"offset"`
+	Count        int    `json:"count"`
+}
+
+// 获取素材列表
+func (material *Material) BatchGet(materialType string, offset, count int) ([]byte, error) {
+	if offset < 0 {
+		offset = 0
+	}
+
+	if count <= 0 {
+		count = 20
+	}
+
+	request := reqBatchGat{
+		MaterialType: materialType,
+		Offset:       offset,
+		Count:        count,
+	}
+
+	result, err := material.HTTPPostJSONWithAccessToken(batchgetMaterialURL, request)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }
