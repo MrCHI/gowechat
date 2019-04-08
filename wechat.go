@@ -60,6 +60,20 @@ func (wc *Wechat) MpMgr() (mp *MpMgr, err error) {
 	return
 }
 
+// 开放平台管理实例
+func (wc *Wechat) GetOpenPlatform() (op *OpenPlatformManage, err error) {
+	err = wc.checkOpenPlatformConfig()
+
+	if err != nil {
+		return nil, err
+	}
+
+	op = new(OpenPlatformManage)
+	op.Wechat = wc
+
+	return op, nil
+}
+
 //checkCfgBase 检查配置基本信息
 func (wc *Wechat) checkCfgBase() (err error) {
 	if wc.Context.AppID == "" {
@@ -74,6 +88,7 @@ func (wc *Wechat) checkCfgBase() (err error) {
 	return
 }
 
+// 检查商务平台参数
 func (wc *Wechat) checkCfgMch() (err error) {
 	err = wc.checkCfgBase()
 	if err != nil {
@@ -94,4 +109,25 @@ func (wc *Wechat) checkCfgMch() (err error) {
 	//初始化 http client, 有错误会出错误
 	err = wc.Context.InitHTTPClients()
 	return
+}
+
+// 检查开放平台参数
+func (wc *Wechat) checkOpenPlatformConfig() (err error) {
+	if wc.Context.ComponentAppId == "" {
+		return fmt.Errorf("%s", "请指定第三方平台组件APPID")
+	}
+
+	if wc.Context.ComponentAppSecret == "" {
+		return fmt.Errorf("%s", "请指定第三方平台组件SECRET")
+	}
+
+	if wc.Context.ComponentAppToken == "" {
+		return fmt.Errorf("%s", "第三方平台组件TOKEN")
+	}
+
+	if wc.Context.ComponentAppKey == "" {
+		return fmt.Errorf("%s", " 第三方平台组件AESKEY")
+	}
+
+	return nil
 }
