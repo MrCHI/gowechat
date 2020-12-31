@@ -58,6 +58,8 @@ const (
 	EventPicWeixin = "pic_weixin"
 	//EventLocationSelect 弹出地理位置选择器的事件推送
 	EventLocationSelect = "location_select"
+	// 消息事件推送，在模版消息发送任务完成后，微信服务器会将是否送达成功作为通知
+	EventTempLateSendJobFinish = "TEMPLATESENDJOBFINISH"
 )
 
 //MixMessage 存放所有微信发送过来的消息和事件

@@ -58,17 +58,21 @@ type resTemplateSend struct {
 //Send 发送模板消息
 func (tpl *Template) Send(msg *Message) (msgID int64, err error) {
 	response, err := tpl.HTTPPostJSONWithAccessToken(templateSendURL, msg)
+
 	if err != nil {
 		return 0, err
 	}
 
 	var result resTemplateSend
 	err = json.Unmarshal(response, &result)
+
 	if err != nil {
-		return
+		return 0, err
 	}
+
 	msgID = result.MsgID
-	return
+
+	return 0, nil
 }
 
 //IndustryList 行业列表
